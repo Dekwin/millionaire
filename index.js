@@ -4,7 +4,7 @@
 
 
 var domain = require('domain');
-
+var config = require('config');
 
 var mainDomain = domain.create();
 
@@ -18,8 +18,9 @@ mainDomain.on("error",function (err) {
 mainDomain.run(function() {
     var http = require('http');
     var server = http.createServer(main);
-    server.listen(port,host,function (err) {
-        console.log("Main listening : http://"+host+":"+port+"/");
+    
+    server.listen(config.get('port'),host,function (err) {
+        console.log("Main listening : http://"+host+":"+config.get('port')+"/");
     });
 });
 
