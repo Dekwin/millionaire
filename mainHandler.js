@@ -2,17 +2,20 @@
  * Created by dekst on 16.04.2016.
  */
 var askans = require('askans');
+var config = require('config');
 
 
 
 function mainHandler(req,res) {
 
+    
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
     switch (req.url){
         case '/':
              askans.createTestPostsTable();
              askans.createTestUsersTable();
+            console.log("token: "+config.get('access_token'));
             res.end("main");
             break;
 

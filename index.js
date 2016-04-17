@@ -6,27 +6,45 @@
 var domain = require('domain');
 var config = require('config');
 
+
 var mainDomain = domain.create();
 
-var port = 8080;
-var host = '192.168.1.110';
 
 mainDomain.on("error",function (err) {
    console.log("mainDomain error: "+err);
 });
 
 mainDomain.run(function() {
+
     var http = require('http');
-    var server = http.createServer(main);
-    
-    server.listen(config.get('port'),host,function (err) {
-        console.log("Main listening : http://"+host+":"+config.get('port')+"/");
+    var vkApi = require('./node_modules/askans/VKApi');
+
+    vkApi.initApi(function (error, access_token) {
+        if(error){
+
+            var server = http.createServer(function (req,res) {
+               // var utils = require('util');
+                res.end("Unable to connect!");
+            });
+            server.listen(config.get('port'), config.get('host'), function (err) {
+                console.log("Main listening : http://" + config.get('host') + ":" + config.get('port') + "/");
+            });
+        }
+        else {
+            config.set('access_token', access_token.access_token);
+            var server = http.createServer(main);
+            server.listen(config.get('port'), config.get('host'), function (err) {
+                console.log("Main listening : http://" + config.get('host') + ":" + config.get('port') + "/");
+            });
+        }
     });
+
+
 });
 
 function main(req,res) {
     var mainHandler = require('./mainHandler');
-    
+    console.log("handler");
     var appDomain = domain.create();
     appDomain.add(req);
     appDomain.add(res);
