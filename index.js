@@ -15,30 +15,12 @@ mainDomain.on("error",function (err) {
 });
 
 mainDomain.run(function() {
-
     var http = require('http');
-    var vkApi = require('./node_modules/askans/VKApi');
 
-    vkApi.initApi(function (error, access_token) {
-        if(error){
-
-            var server = http.createServer(function (req,res) {
-               // var utils = require('util');
-                res.end("Unable to connect!");
-            });
-            server.listen(config.get('port'), config.get('host'), function (err) {
-                console.log("Main listening : http://" + config.get('host') + ":" + config.get('port') + "/");
-            });
-        }
-        else {
-            config.set('access_token', access_token.access_token);
             var server = http.createServer(main);
-            server.listen(config.get('port'), config.get('host'), function (err) {
+            server.listen(config.get('port'), function (err) {
                 console.log("Main listening : http://" + config.get('host') + ":" + config.get('port') + "/");
             });
-        }
-    });
-
 
 });
 
