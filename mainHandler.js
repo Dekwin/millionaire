@@ -21,7 +21,7 @@ dbModule.createTestUsersTable();
 
 function mainHandler(req,res) {
 
-    console.log("handler");
+   // console.log("handler");
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 

@@ -28,7 +28,7 @@ mainDomain.run(function() {
 
 
 mainDomain.run(function() {
-    console.log("main")
+    console.log("Service starting.")
     var http = require('http');
 
 
@@ -43,7 +43,7 @@ mainDomain.run(function() {
 
     var server = http.createServer(mainHandler);
     server.listen(config.get('port'), function (err) {
-        console.log("Main listening : http://" + config.get('host') + ":" + config.get('port') + "/");
+        console.log("Service listening : http://" + config.get('host') + ":" + config.get('port') + "/");
     });
     /*
      appDomain.run(function(){
@@ -54,7 +54,7 @@ mainDomain.run(function() {
 });
 
 function main(req,res) {
-    console.log("main")
+   // console.log("main")
     var mainHandler = require('./mainHandler');
 
     var appDomain = domain.create();
